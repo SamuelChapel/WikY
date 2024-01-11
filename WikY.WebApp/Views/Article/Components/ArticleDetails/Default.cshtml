@@ -1,0 +1,25 @@
+﻿@model (ArticleModel article, bool showDetailsBtn)
+
+<div class="card col-lg-3">
+    <div class="card-header">
+        <h5 class="card-title text-center">@Model.article.Title</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">@Model.article.Content</p>
+        <p class="fst-italic">@Model.article.Author</p>
+
+        @if (Model.showDetailsBtn)
+        {
+            <a class="btn btn-secondary"
+               asp-controller="Article"
+               asp-action="Details"
+               asp-route-id="@Model.article.Id">
+                Détails
+            </a>
+        }
+    </div>
+    <div class="card-footer text-muted">
+        <p>Création : le @Model.article.CreatedAt.ToShortDateString() à @Model.article.CreatedAt.ToLongTimeString()</p>
+        <p>Modification : le @Model.article.UpdatedAt.ToShortDateString() à @Model.article.UpdatedAt.ToLongTimeString()</p>
+    </div>
+</div>

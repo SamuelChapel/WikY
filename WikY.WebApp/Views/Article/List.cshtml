@@ -1,0 +1,8 @@
+﻿@model List<ArticleModel>
+
+<div class="d-flex gap-5">
+    @foreach (ArticleModel article in Model)
+    {
+        <vc:article-details article="article" show-detail-btn="true" />
+    }
+</div>
