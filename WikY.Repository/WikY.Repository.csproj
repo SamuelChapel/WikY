@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WikY.Entities\WikY.Entities.csproj" />
+    <ProjectReference Include="..\WikY.Repository.Contracts\WikY.Repository.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

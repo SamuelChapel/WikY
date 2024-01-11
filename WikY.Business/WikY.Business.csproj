@@ -14,4 +14,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WikY.Business.Contracts\WikY.Business.Contracts.csproj" />
+    <ProjectReference Include="..\WikY.Entities\WikY.Entities.csproj" />
+    <ProjectReference Include="..\WikY.Repository.Contracts\WikY.Repository.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

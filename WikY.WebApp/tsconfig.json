@@ -1,4 +1,5 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "noImplicitAny": false,
     "noEmitOnError": true,
@@ -7,11 +8,7 @@
     "target": "ES6",
     "outDir": "wwwroot/js"
   },
-  "exclude": [
-    "node_modules",
-    "wwwroot"
-  ],
   "include": [
-    "scripts/**/**"
+    "scripts/**/*"
   ]
 }
