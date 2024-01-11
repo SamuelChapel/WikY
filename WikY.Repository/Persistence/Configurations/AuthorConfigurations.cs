@@ -33,6 +33,6 @@ public class AuthorConfigurations : IEntityTypeConfiguration<Author>
             .IsRequired();
 
         builder.Navigation(a => a.Articles)
-            .UsePropertyAccessMode(PropertyAccessMode.Property);
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }

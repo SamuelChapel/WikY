@@ -19,7 +19,7 @@ public class ArticleConfigurations : IEntityTypeConfiguration<Article>
                 value => new ArticleId(value)
             );
 
-        builder.Property(a => a.Theme)
+        builder.Property(a => a.Title)
             .IsRequired();
 
         builder.Property(a => a.Content)
@@ -36,6 +36,6 @@ public class ArticleConfigurations : IEntityTypeConfiguration<Article>
             .IsRequired();
 
         builder.Navigation(a => a.Comments)
-            .UsePropertyAccessMode(PropertyAccessMode.Property);
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }

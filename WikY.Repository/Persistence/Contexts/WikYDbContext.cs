@@ -1,18 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WikY.Entities.Articles;
+using WikY.Entities.Authors;
+using WikY.Entities.Comments;
 using WikY.Entities.Common;
 
-namespace WikY.Repository.Persistence.Context;
+namespace WikY.Repository.Persistence.Contexts;
 
-public sealed class WikYDbContext : DbContext
+public sealed class WikYDbContext(DbContextOptions<WikYDbContext> options) : DbContext(options)
 {
+    public DbSet<Article> Articles { get; set; } = null!;
+    public DbSet<Author> Authors { get; set; } = null!;
+    public DbSet<Comment> Comments { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(WikYDbContext).Assembly);
-    }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Data Source=MSI; Initial Catalog=MessageHub; Integrated Security=SSPI; TrustServerCertificate=True");
+        var authors = Author.GetRandomAuthors();
+        modelBuilder.Entity<Author>().HasData(authors);
     }
 
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)

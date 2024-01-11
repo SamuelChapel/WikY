@@ -2,7 +2,7 @@
 
 namespace WikY.Repository.Persistence.Repositories.Base;
 
-public interface IWriteRepository<TEntity, TId> where TEntity : Entity<TEntity>
+public interface IWriteRepository<TEntity, TId> where TEntity : Entity<TId>
 {
     /// <summary>
     /// Create a <typeparamref name="TEntity"/>

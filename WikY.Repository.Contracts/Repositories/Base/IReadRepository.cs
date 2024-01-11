@@ -2,7 +2,7 @@
 
 namespace WikY.Repository.Persistence.Repositories.Base;
 
-public interface IReadRepository<TEntity, TId> where TEntity : Entity<TEntity>
+public interface IReadRepository<TEntity, TId> where TEntity : Entity<TId>
 {
     /// <summary>
     /// Get a <typeparamref name="TEntity"/> by his id 

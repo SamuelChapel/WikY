@@ -1,7 +1,6 @@
 ﻿namespace WikY.Entities.Common;
 
 public abstract class Entity<TId> : DatableEntity, IEquatable<Entity<TId>>
-    where TId : ValueObject
 {
     public TId Id { get; protected set; }
 
