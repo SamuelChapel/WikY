@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikY.WebApp", "WikY.WebApp\WikY.WebApp.csproj", "{20ED7658-B675-4926-889B-D6BC3CF7CE3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikY.Business", "WikY.Business\WikY.Business.csproj", "{976DEB1D-D10F-4DAE-8D16-18EBB78868DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikY.Business.Contracts", "WikY.Business.Contracts\WikY.Business.Contracts.csproj", "{FE5AE180-5311-470F-A2AF-D90AF9AD41B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikY.Entities", "WikY.Entities\WikY.Entities.csproj", "{03857437-8F7E-4D78-A065-8CD02EF76820}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikY.Repository", "WikY.Repository\WikY.Repository.csproj", "{0F881958-BD43-42FD-BE91-68C36AAE217E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikY.Repository.Contracts", "WikY.Repository.Contracts\WikY.Repository.Contracts.csproj", "{FA3E549C-874B-4CEE-A441-A99A13C863F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20ED7658-B675-4926-889B-D6BC3CF7CE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20ED7658-B675-4926-889B-D6BC3CF7CE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20ED7658-B675-4926-889B-D6BC3CF7CE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20ED7658-B675-4926-889B-D6BC3CF7CE3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{976DEB1D-D10F-4DAE-8D16-18EBB78868DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{976DEB1D-D10F-4DAE-8D16-18EBB78868DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{976DEB1D-D10F-4DAE-8D16-18EBB78868DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{976DEB1D-D10F-4DAE-8D16-18EBB78868DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE5AE180-5311-470F-A2AF-D90AF9AD41B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE5AE180-5311-470F-A2AF-D90AF9AD41B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE5AE180-5311-470F-A2AF-D90AF9AD41B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE5AE180-5311-470F-A2AF-D90AF9AD41B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03857437-8F7E-4D78-A065-8CD02EF76820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03857437-8F7E-4D78-A065-8CD02EF76820}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03857437-8F7E-4D78-A065-8CD02EF76820}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03857437-8F7E-4D78-A065-8CD02EF76820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F881958-BD43-42FD-BE91-68C36AAE217E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F881958-BD43-42FD-BE91-68C36AAE217E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F881958-BD43-42FD-BE91-68C36AAE217E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F881958-BD43-42FD-BE91-68C36AAE217E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA3E549C-874B-4CEE-A441-A99A13C863F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3E549C-874B-4CEE-A441-A99A13C863F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA3E549C-874B-4CEE-A441-A99A13C863F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3E549C-874B-4CEE-A441-A99A13C863F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {974417AD-EA1A-4D1B-86D8-D4F080F8AD28}
+	EndGlobalSection
+EndGlobal
