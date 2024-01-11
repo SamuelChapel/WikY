@@ -1,0 +1,49 @@
+﻿@model CreateArticleViewModel
+
+@{
+    ViewData["Title"] = "Ajout d'un article";
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h4 class="text-center">Ajout d'un article</h4>
+
+<form asp-action="Create" class="w-75">
+    <div class="form-group">
+        <label asp-for="@Model.Article.Title" class="control-label">Thème</label>
+        <input type="text"
+               asp-for="@Model.Article.Title"
+               class="form-control"
+               placeholder="Entrez un thème"
+               required />
+        <span asp-validation-for="@Model.Article.Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Article.Content" class="control-label">Contenu</label>
+        <input type="text"
+               asp-for="@Model.Article.Content"
+               class="form-control"
+               placeholder="Entrez un contenu"
+               required />
+        <span asp-validation-for="@Model.Article.Content" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-4">
+        <label asp-for="@Model.Article.AuthorId" class="control-label">Auteur</label>
+        <select asp-for="@Model.Article.AuthorId">
+            @for (int i = 0; i < Model.Authors.Count; i++)
+            {
+                <option value="@Model.Authors[i].Id"><text>@Model.Authors[i].FirstName @Model.Authors[i].LastName</text></option>
+            }
+        </select>
+        <span asp-validation-for="@Model.Article.Author" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex justify-content-evenly mt-4">
+        <input type="submit" value="Valider" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Retour</a>
+    </div>
+</form>
