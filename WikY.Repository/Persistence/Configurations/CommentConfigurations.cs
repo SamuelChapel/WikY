@@ -27,5 +27,11 @@ public class CommentConfigurations : IEntityTypeConfiguration<Comment>
             .WithMany(a => a.Comments)
             .HasForeignKey(c => c.ArticleId)
             .IsRequired();
+
+        builder.HasOne(c => c.Author)
+            .WithMany(a => a.Comments)
+            .HasForeignKey(c => c.AuthorId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired();
     }
 }

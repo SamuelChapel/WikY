@@ -1,6 +1,6 @@
 ﻿@model ArticleIndexViewModel
 
-<div class="d-flex flex-row gap-2 mb-4">
+<div class="d-flex flex-row gap-2 m-3">
     <a asp-action="Create" class="btn btn-primary">Ajouter un article</a>
     <a asp-action="List" class="btn btn-primary">Afficher Tous</a>
 </div>
@@ -10,4 +10,7 @@
     <p>@Model.Message</p>
 }
 
-<vc:article-details article="@Model.Article" show-detail-btn="true" />
+@if (Model.Article is not null)
+{
+    <vc:article-details article="@Model.Article" show-detail-btn="true" />
+}

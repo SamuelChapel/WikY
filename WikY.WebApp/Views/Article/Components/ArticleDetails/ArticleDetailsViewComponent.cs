@@ -5,7 +5,7 @@ namespace WikY.WebApp.Views.Article.Components.ArticleDetails;
 
 public class ArticleDetailsViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke(ArticleModel article, bool showDetailBtn)
+    public IViewComponentResult Invoke(ArticleDto article, bool showDetailBtn)
     {
         return View((article, showDetailBtn));
     }

@@ -1,6 +1,6 @@
 ﻿namespace WikY.Entities.Common;
 
-public abstract class DatableEntity : ValueObject
+public abstract class DatedEntity : ValueObject
 {
     public DateTime CreatedAt { get; protected set; }
     public DateTime UpdatedAt { get; protected set; }

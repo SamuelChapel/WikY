@@ -16,22 +16,30 @@ public sealed class WikYDbContext(DbContextOptions<WikYDbContext> options) : DbC
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(WikYDbContext).Assembly);
 
-        var authors = Author.GetRandomAuthors();
+        // Populate Database with fake data for testing
+        var authors = Author.GetRandomAuthors(100).ToList();
         modelBuilder.Entity<Author>().HasData(authors);
+
+        var authorIds = authors.Select(a => a.Id).ToList();
+        var articles = Article.GetRandomArticles(authorIds, 200).ToList();
+        modelBuilder.Entity<Article>().HasData(articles);
+
+        var comment = Comment.GetRandomComments(articles.Select(a => a.Id).ToList(), authorIds, 2000).ToList();
+        modelBuilder.Entity<Comment>().HasData(comment);
     }
 
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
         ChangeTracker
             .Entries()
-            .Where(e => e.Entity is DatableEntity && e.State is EntityState.Added or EntityState.Modified)
+            .Where(e => e.Entity is DatedEntity && e.State is EntityState.Added or EntityState.Modified)
             .ToList()
             .ForEach(e =>
             {
                 if (e.State is EntityState.Added)
-                    ((DatableEntity)e.Entity).SetCreatedAt();
+                    ((DatedEntity)e.Entity).SetCreatedAt();
 
-                ((DatableEntity)e.Entity).ModifyUpdatedAt();
+                ((DatedEntity)e.Entity).ModifyUpdatedAt();
             });
 
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

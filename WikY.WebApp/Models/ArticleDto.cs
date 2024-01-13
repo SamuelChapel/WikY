@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using WikY.Entities.Comments;
 
 namespace WikY.WebApp.Models;
 
-public class ArticleModel
+public class ArticleDto
 {
     public string Id { get; set; } = null!;
 
@@ -16,6 +17,8 @@ public class ArticleModel
 
     public string AuthorId { get; set; } = null!;
     public string Author { get; set; } = null!;
+
+    public List<Comment> Comments { get; set; } = [];
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

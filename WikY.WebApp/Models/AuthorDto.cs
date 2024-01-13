@@ -2,7 +2,7 @@
 
 namespace WikY.WebApp.Models;
 
-public sealed class AuthorModel
+public sealed class AuthorDto
 {
     public string Id { get; set; } = null!;
 

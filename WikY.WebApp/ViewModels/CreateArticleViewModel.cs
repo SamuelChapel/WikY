@@ -4,6 +4,6 @@ namespace WikY.WebApp.ViewModels;
 
 public class CreateArticleViewModel
 {
-    public ArticleModel Article { get; set; } = null!;
-    public List<AuthorModel> Authors { get; set; } = null!;
+    public ArticleDto Article { get; set; } = null!;
+    public List<AuthorDto> Authors { get; set; } = null!;
 }

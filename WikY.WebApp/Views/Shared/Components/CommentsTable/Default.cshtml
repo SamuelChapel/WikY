@@ -1,0 +1,20 @@
+﻿@model (string ArticleId, List<CommentDto> Comments)
+
+<table class="table table-hover table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Auteur</th>
+            <th scope="col">Contenu</th>
+            <th scope="col">Date d'ajout</th>
+            <th scope="col">Date de modification</th>
+            <th scope="col">Supprimer</th>
+            <th scope="col">Supprimer en ajax</th>
+        </tr>
+    </thead>
+    <tbody id="table-comment-body">
+        @foreach (CommentDto comment in Model.Comments)
+        {
+            <vc:comment-row article-id="@Model.ArticleId" comment="comment" />
+        }
+    </tbody>
+</table>

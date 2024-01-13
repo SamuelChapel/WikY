@@ -1,0 +1,22 @@
+﻿@model (string ArticleId, CommentDto Comment)
+
+<tr id="comment-@Model.Comment.Id">
+    <td>@Model.Comment.Author</td>
+    <td>@Model.Comment.Content</td>
+    <td>@Model.Comment.CreatedAt.ToShortDateString()</td>
+    <td>@Model.Comment.UpdatedAt.ToShortDateString()</td>
+    <td>
+        <form asp-action="Delete" asp-controller="Comment">
+            <input type="hidden" name="articleId" value="@Model.ArticleId" />
+            <input type="hidden" name="commentId" value="@Model.Comment.Id" />
+            <input type="submit" value="Supprimer" class="btn btn-danger">
+        </form>
+    </td>
+    <td>
+        <form id="deleteCommentAjaxForm">
+            <input type="hidden" name="articleId" value="@Model.ArticleId" />
+            <input type="hidden" name="commentId" value="@Model.Comment.Id" />
+            <input type="submit" value="Supprimer en ajax" class="btn btn-danger">
+        </form>
+    </td>
+</tr>

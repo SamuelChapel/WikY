@@ -1,6 +1,6 @@
 ﻿namespace WikY.Entities.Common;
 
-public abstract class Entity<TId> : DatableEntity, IEquatable<Entity<TId>>
+public abstract class Entity<TId> : DatedEntity, IEquatable<Entity<TId>>
 {
     public TId Id { get; protected set; }
 

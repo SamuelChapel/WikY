@@ -20,6 +20,7 @@ public static class ServiceCollection
 
         services.AddTransient<IArticleRepository, ArticleRepository>();
         services.AddTransient<IAuthorRepository, AuthorRepository>();
+        services.AddTransient<ICommentRepository, CommentRepository>();
 
         return services;
     }

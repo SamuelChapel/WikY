@@ -1,4 +1,5 @@
-﻿using WikY.WebApp.Mappers;
+﻿using WikY.WebApp.Controllers;
+using WikY.WebApp.Mappers;
 
 namespace WikY.WebApp.Extensions;
 
@@ -8,6 +9,9 @@ public static class ServiceCollection
     {
         services.AddTransient<AuthorMapper>();
         services.AddTransient<ArticleMapper>();
+        services.AddTransient<CommentMapper>();
+
+        services.AddScoped<AuthorController>();
 
         return services;
     }

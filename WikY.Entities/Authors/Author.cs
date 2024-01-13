@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using WikY.Entities.Articles;
+using WikY.Entities.Comments;
 using WikY.Entities.Common;
 
 namespace WikY.Entities.Authors;
@@ -11,6 +12,9 @@ public sealed class Author : Entity<AuthorId>
 
     public readonly List<Article> _articles = [];
     public IReadOnlyList<Article> Articles => _articles.AsReadOnly();
+
+    public readonly List<Comment> _comments = [];
+    public IReadOnlyList<Comment> Comments => _comments.AsReadOnly();
 
     public Author(string firstName, string lastName)
         : base(AuthorId.CreateUnique())

@@ -37,6 +37,16 @@ public sealed class Article : Entity<ArticleId>
             .Generate());
     }
 
+    public void SetTitle(string title)
+    {
+        Title = title;
+    }
+
+    public void SetContent(string content)
+    {
+        Content = content;
+    }
+
 #pragma warning disable CS8618
     public Article() : base(ArticleId.CreateUnique())
     {

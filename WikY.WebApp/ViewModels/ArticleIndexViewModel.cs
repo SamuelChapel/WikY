@@ -6,5 +6,5 @@ public class ArticleIndexViewModel
 {
     public string? Message { get; set; }
 
-    public ArticleModel Article { get; set; } = null!;
+    public ArticleDto? Article { get; set; } = null!;
 }

@@ -7,5 +7,5 @@ namespace WikY.WebApp.Mappers;
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.Target)]
 public partial class AuthorMapper
 {
-    public partial AuthorModel Map(Author author);
+    public partial AuthorDto Map(Author author);
 }

@@ -13,6 +13,7 @@ public sealed class ArticleRepository(WikYDbContext dbContext) : IArticleReposit
     {
         var articles = await _dbContext.Articles
             .Include(a => a.Author)
+            .Include(a => a.Comments)
             .Where(a => a.Id == id).ToListAsync();
         var article = articles
             .FirstOrDefault();
@@ -29,7 +30,7 @@ public sealed class ArticleRepository(WikYDbContext dbContext) : IArticleReposit
 
     public async Task<Article> Create(Article article)
     {
-        _dbContext.Add(article);
+        await _dbContext.AddAsync(article);
 
         await _dbContext.SaveChangesAsync();
 
@@ -45,18 +46,11 @@ public sealed class ArticleRepository(WikYDbContext dbContext) : IArticleReposit
         return article;
     }
 
-    public async Task<bool> Delete(ArticleId id)
+    public async Task Delete(Article article)
     {
-        Article? article = await GetById(id);
-
-        if (article is null)
-            return false;
-
         _dbContext.Articles.Remove(article);
 
         await _dbContext.SaveChangesAsync();
-
-        return true;
     }
 
     public async Task<bool> IsTitleUnique(string title)

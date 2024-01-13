@@ -1,0 +1,13 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Ajout d'un commentaire";
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h4 class="text-center">Ajout d'un commentaire</h4>
+
+<vc:create-comment articleid="@Model" />

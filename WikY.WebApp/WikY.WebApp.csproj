@@ -32,8 +32,4 @@
     <ProjectReference Include="..\WikY.Repository\WikY.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\DataAnnotations\" />
-  </ItemGroup>
-
 </Project>

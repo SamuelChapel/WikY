@@ -8,10 +8,10 @@ public class FindArticleByIdQueryHandler(IArticleRepository articleRepository) :
 {
     private readonly IArticleRepository _articleRepository = articleRepository;
 
-    public Task<Article?> Handle(FindArticleByIdQuery query)
+    public async Task<Article?> Handle(FindArticleByIdQuery query)
     {
         var articleId = ArticleId.Create(query.ArticleId);
 
-        return _articleRepository.GetById(articleId);
+        return await _articleRepository.GetById(articleId);
     }
 }

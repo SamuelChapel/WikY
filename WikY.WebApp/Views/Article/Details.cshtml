@@ -1,18 +1,92 @@
-﻿@model ArticleModel
+﻿@model ArticleDetailsViewModel
 
-<vc:article-details article="@Model" show-detail-btn="false" />
+<p id="article-details-message"></p>
 
-@* <table class="table table-hover table-bordered">
-    <thead class="thead-light">
-        <tr>
-            <th scope="col">Emetteur</th>
-            <th scope="col">Contenu</th>
-            <th scope="col">Date</th>
-            <th scope="col">Details</th>
-            <th scope="col">Editer</th>
-            <th scope="col">Supprimer</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table> *@
+<vc:article-details article="@Model.Article"
+                    show-detail-btn="false" />
+
+<div class="d-flex flex-row gap-2 m-3">
+
+    <a class="btn btn-secondary"
+       asp-controller="Article"
+       asp-action="Edit"
+       asp-route-id="@Model.Article.Id">
+        Modifier
+    </a>
+    <a class="btn btn-danger"
+       asp-controller="Article"
+       asp-action="Delete"
+       asp-route-id="@Model.Article.Id">
+        Supprimer
+    </a>
+    <a class="btn btn-primary"
+       asp-controller="Comment"
+       asp-action="Create"
+       asp-route-id="@Model.Article.Id">
+        Ajouter un commentaire
+    </a>
+</div>
+
+<div class="m-3 border p-4">
+    <h3>Ajout de commentaire</h3>
+    <vc:create-comment article-id="@Model.Article.Id" />
+</div>
+
+<div class="m-3 border p-4">
+    <h3>Ajout de commentaire en ajax</h3>
+    <vc:create-comment article-id="@Model.Article.Id"
+                       ajax="@true" />
+</div>
+
+@if (Model.Comments.Any())
+{
+    <vc:comments-table article-id="@Model.Article.Id"
+                       comments="@Model.Comments" />
+}
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('#deleteCommentAjaxForm').submit((e) => {
+                const target = e.target;
+                console.log(target[0].value);
+
+                $.post('/Comment/DeleteAjax', { commentId: e.target[1].value }, (isDeleted) => {
+                    const messageContainer = $('#article-details-message');
+                    console.log(messageContainer);
+
+                    if (isDeleted) {
+                        $('#comment-' + e.target[1].value).remove();
+
+                        messageContainer.textContent = "commentaire bien supprimé";
+                        messageContainer.classList = '--bs-success-text-emphasis';
+                    } else {
+                        messageContainer.textContent = "impossible de supprimé le commentaire!";
+                        messageContainer.classList = '--bs-danger-text-emphasis';
+                    }
+                });
+
+                e.preventDefault();
+            });
+        });
+
+        $(function () {
+            $('#create-comment-ajax-form').submit((e) => {
+                console.log('@Model.Article.Id');
+
+                $.post('/Comment/CreateAjax', {
+                    articleId: '@Model.Article.Id',
+                    content: e.target.content.value,
+                    authorId: e.target.author.value
+                },
+                    (comment) => {
+                        $('#table-comment-body').append(comment);
+                    })
+
+                e.preventDefault();
+            });
+        });
+
+    </script>
+}
