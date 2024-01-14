@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllersWithViews();
 
+    Console.WriteLine(builder.Configuration.GetConnectionString("WikY"));
     builder.Services
         .AddWebApp()
         .AddBusiness()

@@ -13,9 +13,7 @@ public static class ServiceCollection
     {
         services.AddDbContext<WikYDbContext>(o =>
         {
-            //o.UseSqlServer(configuration.GetConnectionString("WikY"));
-
-            o.UseSqlServer("Data Source=MSI; Initial Catalog=WikY; Integrated Security=SSPI; TrustServerCertificate=True");
+            o.UseSqlServer(configuration.GetConnectionString("WikY"));
         });
 
         services.AddTransient<IArticleRepository, ArticleRepository>();
