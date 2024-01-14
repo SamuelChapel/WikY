@@ -1,12 +1,12 @@
 using WikY.Business.Extensions;
 using WikY.Repository.Extensions;
 using WikY.WebApp.Extensions;
+using WikY.WebApp.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllersWithViews();
 
-    Console.WriteLine(builder.Configuration.GetConnectionString("WikY"));
     builder.Services
         .AddWebApp()
         .AddBusiness()
@@ -22,6 +22,8 @@ var app = builder.Build();
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }
+
+    app.UseMiddleware<Redirect404Middleware>();
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
