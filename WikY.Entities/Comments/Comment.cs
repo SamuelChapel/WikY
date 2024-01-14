@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Bogus.Extensions;
 using WikY.Entities.Articles;
 using WikY.Entities.Authors;
 using WikY.Entities.Common;
@@ -22,12 +23,14 @@ public sealed class Comment : Entity<CommentId>
         Content = content;
     }
 
-    public static IEnumerable<Comment> GetRandomComments(List<ArticleId> articleIds, List<AuthorId> authorIds, int count = 2000)
+    public static IEnumerable<Comment> GetRandomComments(List<Article> articles, List<AuthorId> authorIds, int count = 2000)
     {
+        var articlesIds = articles.Select(a => a.Id).ToList();
+
         return Enumerable.Range(0, count).Select(i => new Faker<Comment>()
             .RuleFor(a => a.Id, CommentId.CreateUnique())
-            .RuleFor(a => a.Content, f => f.Lorem.Word())
-            .RuleFor(a => a.ArticleId, articleIds[Random.Shared.Next(articleIds.Count)])
+            .RuleFor(a => a.ArticleId, articlesIds[Random.Shared.Next(articlesIds.Count)])
+            .RuleFor(a => a.Content, (f, current) => f.Rant.Review(articles.Find(a => a.Id == current.ArticleId)!.Title).ClampLength(max: 100))
             .RuleFor(a => a.AuthorId, authorIds[Random.Shared.Next(authorIds.Count)])
             .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
             .RuleFor(a => a.UpdatedAt, f => f.Date.Past(1))

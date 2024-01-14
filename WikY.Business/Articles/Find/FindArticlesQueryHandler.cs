@@ -13,25 +13,57 @@ public class FindArticlesQueryHandler(IArticleRepository articleRepository) : IQ
 
     public async Task<List<Article>> Handle(FindArticlesQuery query)
     {
-        var articles = await _articleRepository.GetAll();
+        IEnumerable<Article> articles = await _articleRepository.GetAll();
 
-        var page = ParsePage(query.Page);
-        var count = ParseMaxResult(query.Count);
+        if (query.SearchString is not null)
+            articles = FilterArticles(articles, query.SearchString);
+
+        var page = query.Page ?? DEFAULTPAGE;
+        var count = query.Count ?? DEFAULTCOUNT;
         var startIndex = (page - 1) * count;
 
-        return articles
-            .OrderByDescending(x => x.CreatedAt)
+        articles = articles
             .Skip(startIndex)
-            .Take(count)
-            .ToList();
+            .Take(count);
+
+        articles = OrderArticles(articles, query.Direction, query.OrderBy);
+
+        return articles.ToList();
     }
 
-    private int ParsePage(int? pageQuery)
-        => ParseIntegerOrDefaultValue(pageQuery, DEFAULTPAGE);
+    private IEnumerable<Article> FilterArticles(IEnumerable<Article> articles, string searchString)
+    {
+        return articles.Where(a =>
+            a.Author!.FullName.Contains(searchString, StringComparison.CurrentCultureIgnoreCase) ||
+            a.Title.Contains(searchString, StringComparison.CurrentCultureIgnoreCase) ||
+            a.Content.Contains(searchString));
+    }
 
-    private int ParseMaxResult(int? maxResultQuery)
-        => ParseIntegerOrDefaultValue(maxResultQuery, DEFAULTCOUNT);
+    private IEnumerable<Article> OrderArticles(IEnumerable<Article> articles, OrderByDirection direction, ArticleProperties properties)
+    {
+        return direction switch
+        {
+            OrderByDirection.Ascending => properties switch
+            {
+                ArticleProperties.CreationDate => articles.OrderBy(a => a.CreatedAt),
+                ArticleProperties.Title => articles.OrderBy(a => a.Title),
+                ArticleProperties.AuthorName => articles.OrderBy(a => a.Author!.FullName),
+                ArticleProperties.UpdatedDate => articles.OrderBy(a => a.UpdatedAt),
+                ArticleProperties.Content => articles.OrderBy(a => a.Content),
+                _ => articles.OrderBy(a => a.CreatedAt),
+            },
 
-    private int ParseIntegerOrDefaultValue(int? integerToParse, int defaultValue)
-        => integerToParse ?? defaultValue;
+            OrderByDirection.Descending => properties switch
+            {
+                ArticleProperties.CreationDate => articles.OrderByDescending(a => a.CreatedAt),
+                ArticleProperties.Title => articles.OrderByDescending(a => a.Title),
+                ArticleProperties.AuthorName => articles.OrderByDescending(a => a.Author!.FullName),
+                ArticleProperties.UpdatedDate => articles.OrderByDescending(a => a.UpdatedAt),
+                ArticleProperties.Content => articles.OrderByDescending(a => a.Content),
+                _ => articles.OrderByDescending(a => a.CreatedAt),
+            },
+
+            _ => articles.OrderByDescending(a => a.CreatedAt),
+        };
+    }
 }

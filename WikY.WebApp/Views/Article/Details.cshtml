@@ -49,12 +49,8 @@
     <script>
         $(function () {
             $('#deleteCommentAjaxForm').submit((e) => {
-                const target = e.target;
-                console.log(target[0].value);
-
                 $.post('/Comment/DeleteAjax', { commentId: e.target[1].value }, (isDeleted) => {
                     const messageContainer = $('#article-details-message');
-                    console.log(messageContainer);
 
                     if (isDeleted) {
                         $('#comment-' + e.target[1].value).remove();
@@ -73,16 +69,14 @@
 
         $(function () {
             $('#create-comment-ajax-form').submit((e) => {
-                console.log('@Model.Article.Id');
-
                 $.post('/Comment/CreateAjax', {
                     articleId: '@Model.Article.Id',
                     content: e.target.content.value,
                     authorId: e.target.author.value
                 },
                     (comment) => {
-                        $('#table-comment-body').append(comment);
-                    })
+                        $('#table-comment-body').prepend(comment);
+                    });
 
                 e.preventDefault();
             });

@@ -105,6 +105,36 @@ public class ArticleController(ArticleMapper mapper) : Controller
         return View(articleDtos);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> ListFiltered(
+        [FromServices] IQueryHandler<FindArticlesQuery, List<Article>> handler,
+        string searchString,
+        string order,
+        bool isAscending = true
+        )
+    {
+        ArticleProperties orderByArticleProperty = order switch
+        {
+            "CreationDate" => ArticleProperties.CreationDate,
+            "UpdatedDate" => ArticleProperties.UpdatedDate,
+            "Title" => ArticleProperties.Title,
+            "Content" => ArticleProperties.Content,
+            "AuthorName" => ArticleProperties.AuthorName,
+            _ => ArticleProperties.CreationDate,
+        };
+
+        var query = new FindArticlesQuery(
+            SearchString: searchString,
+            OrderBy: orderByArticleProperty,
+            Direction: isAscending? OrderByDirection.Ascending : OrderByDirection.Descending
+            );
+
+        var articles = await handler.Handle(query);
+        var articleDtos = articles.Select(_mapper.Map).ToList();
+
+        return PartialView("_ArticleList", articleDtos);
+    }
+
     public async Task<IActionResult> Delete(
         [FromServices] ICommandHandler<DeleteArticleCommand, bool> handler,
         [FromRoute] string id)

@@ -21,15 +21,16 @@ public sealed class WikYDbContext(DbContextOptions<WikYDbContext> options) : DbC
         modelBuilder.Entity<Author>().HasData(authors);
 
         var authorIds = authors.Select(a => a.Id).ToList();
-        var articles = Article.GetRandomArticles(authorIds, 200).ToList();
+        var articles = Article.GetRandomArticles(authorIds, 300).ToList();
         modelBuilder.Entity<Article>().HasData(articles);
 
-        var comment = Comment.GetRandomComments(articles.Select(a => a.Id).ToList(), authorIds, 2000).ToList();
+        var comment = Comment.GetRandomComments(articles, authorIds, 2000).ToList();
         modelBuilder.Entity<Comment>().HasData(comment);
     }
 
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
+        // Automatically update creation date and update date for each dated entity
         ChangeTracker
             .Entries()
             .Where(e => e.Entity is DatedEntity && e.State is EntityState.Added or EntityState.Modified)

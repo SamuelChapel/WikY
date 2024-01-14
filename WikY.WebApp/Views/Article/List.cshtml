@@ -1,8 +1,52 @@
 ﻿@model List<ArticleDto>
 
-<div class="d-flex flex-wrap gap-5">
-    @foreach (ArticleDto article in Model)
-    {
-        <vc:article-details article="article" show-detail-btn="true" />
-    }
+<form class="input-group d-flex mb-3" id="search-articles-form">
+    <div class="input-group">
+        <span class="input-group-text">Filtre</span>
+        <input class="form-control w-25"
+               type="search"
+               name="search"
+               placeholder="Entrez votre recherche...">
+        <span class="input-group-text">Tri</span>
+        <select class="form-select" name="order">
+            <option selected value="CreationDate">Date de creation</option>
+            <option value="UpdatedDate">Date de modification</option>
+            <option value="Title">Thème</option>
+            <option value="Content">Contenu</option>
+            <option value="AuthorName">Nom d'auteur</option>
+        </select>
+        <select class="form-select" name="isAscending">
+            <option selected value="true">Ascendant</option>
+            <option selected value="false">Descendant</option>
+        </select>
+        <input class="btn btn-outline-secondary" type="submit" value="Rechercher" />
+    </div>
+</form>
+
+<div id="articles-container">
+    <partial name="_ArticleList" model="@Model" />
 </div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('#search-articles-form').submit((e) => {
+                console.log(e.target.isAscending.value)
+                $.post('/Article/ListFiltered',
+                    {
+                        searchString: e.target.search.value,
+                        order: e.target.order.value,
+                        isAscending: e.target.isAscending.value
+                    },
+                    (articles) => {
+                        $('#articles-container').html(articles);
+                    });
+
+                e.preventDefault();
+            });
+        });
+
+
+    </script>
+}

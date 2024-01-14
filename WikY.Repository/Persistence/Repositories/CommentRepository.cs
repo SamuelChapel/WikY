@@ -50,6 +50,7 @@ public class CommentRepository(WikYDbContext dbContext) : ICommentRepository
         return await _dbContext.Comments
             .Include(c => c.Author)
             .Where(c => c.ArticleId == articleId)
+            .OrderByDescending(c => c.CreatedAt)
             .ToListAsync();
     }
 }

@@ -9,8 +9,8 @@ public sealed class GetCommentsByArticleIdQueryHandler(ICommentRepository commen
 {
     private readonly ICommentRepository _commentRepository = commentRepository;
 
-    public Task<List<Comment>> Handle(GetCommentsByArticleIdQuery query)
+    public async Task<List<Comment>> Handle(GetCommentsByArticleIdQuery query)
     {
-        return _commentRepository.GetCommentsByArticleId(ArticleId.Create(query.ArticleId));
+        return await _commentRepository.GetCommentsByArticleId(ArticleId.Create(query.ArticleId));
     }
 }

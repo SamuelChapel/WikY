@@ -27,14 +27,32 @@ public sealed class Article : Entity<ArticleId>
 
     public static IEnumerable<Article> GetRandomArticles(List<AuthorId> authorIds, int count = 500)
     {
-        return Enumerable.Range(0, count).Select(i => new Faker<Article>()
+        List<Article> articles = [];
+
+        Enumerable.Range(0, count).ToList().ForEach(_ =>
+        {
+            var article = new Faker<Article>()
             .RuleFor(a => a.Id, ArticleId.CreateUnique())
-            .RuleFor(a => a.Title, f => f.Lorem.Word())
+            .RuleFor(a => a.Title, f =>
+            {
+                string title;
+                do
+                {
+                    title = f.Random.Words(3);
+                } while (articles.Any(a => a.Title == title));
+
+                return title;
+            })
             .RuleFor(a => a.Content, f => f.Lorem.Paragraph())
             .RuleFor(a => a.AuthorId, authorIds[Random.Shared.Next(authorIds.Count)])
             .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
-            .RuleFor(a => a.UpdatedAt, f => f.Date.Past(1))
-            .Generate());
+            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
+            .Generate();
+
+            articles.Add(article);
+        });
+
+        return articles;
     }
 
     public void SetTitle(string title)
