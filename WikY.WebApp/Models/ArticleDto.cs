@@ -15,6 +15,7 @@ public class ArticleDto
     [Required(ErrorMessage = "Le contenu doit être rempli")]
     public string Content { get; set; } = null!;
 
+    [Required]
     public string AuthorId { get; set; } = null!;
     public string Author { get; set; } = null!;
 
