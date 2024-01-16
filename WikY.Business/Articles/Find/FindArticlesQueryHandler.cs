@@ -4,14 +4,19 @@ using WikY.Repository.Contracts.Repositories;
 
 namespace WikY.Business.Articles.Find;
 
-public class FindArticlesQueryHandler(IArticleRepository articleRepository) : IQueryHandler<FindArticlesQuery, List<Article>>
+public class FindArticlesQueryHandler(IArticleRepository articleRepository) : IQuerySearcherHandler<FindArticlesQuery, List<Article>, int>
 {
     private const int DEFAULTPAGE = 1;
     private const int DEFAULTCOUNT = 50;
 
     private readonly IArticleRepository _articleRepository = articleRepository;
 
-    public async Task<List<Article>> Handle(FindArticlesQuery query)
+    public async Task<int> Count(FindArticlesQuery query)
+    {
+        return await _articleRepository.Count();
+    }
+
+    public async Task<List<Article>> Search(FindArticlesQuery query)
     {
         IEnumerable<Article> articles = await _articleRepository.GetAll();
 

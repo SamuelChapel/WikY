@@ -22,12 +22,12 @@ public class ArticleController(ArticleMapper mapper) : Controller
     private readonly ArticleMapper _mapper = mapper;
 
     public async Task<IActionResult> Index(
-        [FromServices] IQueryHandler<FindArticlesQuery, List<Article>> handler,
+        [FromServices] IQuerySearcherHandler<FindArticlesQuery, List<Article>, int> handler,
         string? message)
     {
         var query = new FindArticlesQuery(Count: 1);
 
-        var article = (await handler.Handle(query)).FirstOrDefault();
+        var article = (await handler.Search(query)).FirstOrDefault();
 
         return View(new ArticleIndexViewModel { Message = message, Article = article is null ? null : _mapper.Map(article) });
     }
@@ -35,28 +35,40 @@ public class ArticleController(ArticleMapper mapper) : Controller
     [HttpGet]
     public async Task<IActionResult> Create(
         [FromServices] IQueryHandler<GetAllAuthorsQuery, List<Author>> handler,
-        [FromServices] AuthorMapper authorMapper
+        [FromServices] AuthorMapper authorMapper,
+        ArticleDto? articleDto = null
         )
     {
         var authors = await handler.Handle(new GetAllAuthorsQuery());
         var authorDtos = authors.Select(authorMapper.Map).ToList();
 
-        var createArticleModel = new CreateArticleViewModel { Article = new ArticleDto(), Authors = authorDtos};
+        var createArticleModel = new CreateArticleViewModel { Article = articleDto ?? new ArticleDto(), Authors = authorDtos};
         return View(createArticleModel);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(
-        [FromServices] ICommandHandler<CreateArticleCommand, Article> handler,
+        [FromServices] IQueryHandler<GetAllAuthorsQuery, List<Author>> getAllAuthorsHandler,
+        [FromServices] ICommandHandler<CreateArticleCommand, Article> createArticleHandler,
+        [FromServices] AuthorMapper authorMapper,
         CreateArticleViewModel createArticleModel)
     {
-        var command = new CreateArticleCommand(createArticleModel.Article.Title, createArticleModel.Article.Content, createArticleModel.Article.AuthorId);
+        if (ModelState.IsValid)
+        {
+            var command = new CreateArticleCommand(createArticleModel.Article.Title, createArticleModel.Article.Content, createArticleModel.Article.AuthorId);
 
-        var article = await handler.Handle(command);
+            var article = await createArticleHandler.Handle(command);
 
-        createArticleModel.Article = _mapper.Map(article);
+            createArticleModel.Article = _mapper.Map(article);
 
-        return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
+        }
+
+        var authors = await getAllAuthorsHandler.Handle(new GetAllAuthorsQuery());
+        var authorDtos = authors.Select(authorMapper.Map).ToList();
+        createArticleModel.Authors = authorDtos;
+
+        return View("Create", createArticleModel);
     }
 
     public async Task<IActionResult> IsTitleUnique(
@@ -93,13 +105,13 @@ public class ArticleController(ArticleMapper mapper) : Controller
 
     [HttpGet]
     public async Task<IActionResult> List(
-        [FromServices] IQueryHandler<FindArticlesQuery, List<Article>> handler,
+        [FromServices] IQuerySearcherHandler<FindArticlesQuery, List<Article>, int> handler,
         int? page
         )
     {
         var query = new FindArticlesQuery(Page: page, Count: 20);
 
-        var articles = await handler.Handle(query);
+        var articles = await handler.Search(query);
         var articleDtos = articles.Select(_mapper.Map).ToList();
 
         return View(articleDtos);
@@ -107,7 +119,7 @@ public class ArticleController(ArticleMapper mapper) : Controller
 
     [HttpPost]
     public async Task<IActionResult> ListFiltered(
-        [FromServices] IQueryHandler<FindArticlesQuery, List<Article>> handler,
+        [FromServices] IQuerySearcherHandler<FindArticlesQuery, List<Article>, int> handler,
         string searchString,
         string order,
         bool isAscending = true
@@ -129,10 +141,20 @@ public class ArticleController(ArticleMapper mapper) : Controller
             Direction: isAscending? OrderByDirection.Ascending : OrderByDirection.Descending
             );
 
-        var articles = await handler.Handle(query);
+        var articles = await handler.Search(query);
         var articleDtos = articles.Select(_mapper.Map).ToList();
 
         return PartialView("_ArticleList", articleDtos);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CountArticles(
+        [FromServices] IQuerySearcherHandler<FindArticlesQuery, List<Article>, int> handler
+        )
+    {
+        var count = await handler.Count(new FindArticlesQuery());
+
+        return Json(count);
     }
 
     public async Task<IActionResult> Delete(
@@ -169,10 +191,15 @@ public class ArticleController(ArticleMapper mapper) : Controller
         [FromServices] ICommandHandler<UpdateArticleCommand, Article?> handler,
         ArticleDto articleDto)
     {
-        var command = new UpdateArticleCommand(articleDto.Id, articleDto.Title, articleDto.Content);
+        if (ModelState.IsValid)
+        {
+            var command = new UpdateArticleCommand(articleDto.Id, articleDto.Title, articleDto.Content);
 
-        await handler.Handle(command);
+            await handler.Handle(command);
 
-        return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(articleDto);
     }
 }

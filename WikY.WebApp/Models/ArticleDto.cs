@@ -17,7 +17,8 @@ public class ArticleDto
 
     [Required]
     public string AuthorId { get; set; } = null!;
-    public string Author { get; set; } = null!;
+
+    public string? Author { get; set; } = null!;
 
     public List<Comment> Comments { get; set; } = [];
 

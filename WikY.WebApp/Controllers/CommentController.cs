@@ -23,9 +23,14 @@ public class CommentController : Controller
         CreateCommentViewModel createCommentViewModel
         )
     {
-        await handler.Handle(new CreateCommentCommand(createCommentViewModel.Comment.ArticleId, createCommentViewModel.Comment.AuthorId, createCommentViewModel.Comment.Content));
+        if (ModelState.IsValid)
+        {
+            await handler.Handle(new CreateCommentCommand(createCommentViewModel.Comment.ArticleId, createCommentViewModel.Comment.AuthorId, createCommentViewModel.Comment.Content));
 
-        return RedirectToAction("Details", "Article", new { id = createCommentViewModel.Comment.ArticleId });
+            return RedirectToAction("Details", "Article", new { id = createCommentViewModel.Comment.ArticleId });
+        }
+
+        return View(createCommentViewModel);
     }
 
     [HttpPost]

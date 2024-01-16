@@ -57,4 +57,9 @@ public sealed class ArticleRepository(WikYDbContext dbContext) : IArticleReposit
     {
         return await _dbContext.Articles.AnyAsync(a => a.Title == title);
     }
+
+    public async Task<int> Count()
+    {
+        return await _dbContext.Articles.CountAsync();
+    }
 }

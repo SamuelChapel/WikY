@@ -25,7 +25,7 @@ public static class ServiceCollection
         services.AddTransient<IQueryHandler<FindAuthorByIdQuery, Author?>, FindAuthorByIdQueryHandler>();
 
         services.AddTransient<ICommandHandler<CreateArticleCommand, Article>, CreateArticleCommandHandler>();
-        services.AddTransient<IQueryHandler<FindArticlesQuery, List<Article>>, FindArticlesQueryHandler>();
+        services.AddTransient<IQuerySearcherHandler<FindArticlesQuery, List<Article>, int>, FindArticlesQueryHandler>();
         services.AddTransient<IQueryHandler<FindArticleByIdQuery, Article?>, FindArticleByIdQueryHandler>();
         services.AddTransient<ICommandHandler<DeleteArticleCommand, bool>, DeleteArticleCommandHandler>();
         services.AddTransient<ICommandHandler<UpdateArticleCommand, Article?>, UpdateArticleCommandHandler>();
