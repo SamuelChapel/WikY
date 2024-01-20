@@ -6,5 +6,5 @@ public class CreateCommentViewModel
 {
     public CommentDto Comment { get; set; } = null!;
 
-    public List<AuthorDto> Authors { get; set; } = null!;
+    public List<AuthorDto>? Authors { get; set; } = null!;
 }

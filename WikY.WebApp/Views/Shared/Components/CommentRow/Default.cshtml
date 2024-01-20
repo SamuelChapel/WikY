@@ -9,14 +9,20 @@
         <form asp-action="Delete" asp-controller="Comment">
             <input type="hidden" name="articleId" value="@Model.ArticleId" />
             <input type="hidden" name="commentId" value="@Model.Comment.Id" />
-            <input type="submit" value="Supprimer" class="btn btn-danger">
+            <input type="submit" 
+                value="Supprimer" 
+                class="btn btn-danger" 
+                onclick="return confirm('Voulez-vous vraiment supprimer le commentaire de @Model.Comment.Author ?');">
         </form>
     </td>
     <td>
         <form id="deleteCommentAjaxForm">
             <input type="hidden" name="articleId" value="@Model.ArticleId" />
             <input type="hidden" name="commentId" value="@Model.Comment.Id" />
-            <input type="submit" value="Supprimer en ajax" class="btn btn-danger">
+            <input type="submit" 
+                value="Supprimer en ajax" 
+                class="btn btn-danger" 
+                onclick="return confirm('Voulez-vous vraiment supprimer le commentaire de @Model.Comment.Author ?');">
         </form>
     </td>
 </tr>

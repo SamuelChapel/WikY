@@ -16,7 +16,8 @@
     <a class="btn btn-danger"
        asp-controller="Article"
        asp-action="Delete"
-       asp-route-id="@Model.Article.Id">
+       asp-route-id="@Model.Article.Id"
+       onclick="return confirm('Voulez-vous vraiment supprimer l'article @Model.Article.Title ?');">
         Supprimer
     </a>
     <a class="btn btn-primary"

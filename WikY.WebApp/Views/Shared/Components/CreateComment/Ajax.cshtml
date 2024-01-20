@@ -1,6 +1,6 @@
 ﻿@model List<AuthorDto>
 
-<form id="create-comment-ajax-form" class="w-75">
+<form asp-action="Create" asp-controller="Comment" id="create-comment-ajax-form" class="w-75">
     <div class="form-group">
         <label class="control-label">Contenu</label>
         <input type="text"

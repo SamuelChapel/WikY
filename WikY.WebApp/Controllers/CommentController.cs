@@ -30,7 +30,7 @@ public class CommentController : Controller
             return RedirectToAction("Details", "Article", new { id = createCommentViewModel.Comment.ArticleId });
         }
 
-        return View(createCommentViewModel);
+        return View(createCommentViewModel.Comment.Id);
     }
 
     [HttpPost]
