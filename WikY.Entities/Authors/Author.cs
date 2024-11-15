@@ -31,8 +31,8 @@ public sealed class Author : Entity<AuthorId>
             .RuleFor(a => a.Id, AuthorId.CreateUnique())
             .RuleFor(a => a.FirstName, f => f.Person.FirstName)
             .RuleFor(a => a.LastName, f => f.Person.LastName)
-            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
-            .RuleFor(a => a.UpdatedAt, f => f.Date.Past(1))
+            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2).ToUniversalTime())
+            .RuleFor(a => a.UpdatedAt, f => f.Date.Past(1).ToUniversalTime())
             .Generate());
     }
 

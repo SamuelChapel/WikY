@@ -45,8 +45,8 @@ public sealed class Article : Entity<ArticleId>
             })
             .RuleFor(a => a.Content, f => f.Lorem.Paragraph())
             .RuleFor(a => a.AuthorId, authorIds[Random.Shared.Next(authorIds.Count)])
-            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
-            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow))
+            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2).ToUniversalTime())
+            .RuleFor(a => a.UpdatedAt, (f, current) => f.Date.Between(current.CreatedAt, DateTime.UtcNow).ToUniversalTime())
             .Generate();
 
             articles.Add(article);
@@ -65,10 +65,7 @@ public sealed class Article : Entity<ArticleId>
         Content = content;
     }
 
-#pragma warning disable CS8618
     public Article() : base(ArticleId.CreateUnique())
     {
-
     }
-#pragma warning restore CS8618
 }

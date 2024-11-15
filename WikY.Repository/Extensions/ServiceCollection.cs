@@ -13,7 +13,7 @@ public static class ServiceCollection
     {
         services.AddDbContext<WikYDbContext>(o =>
         {
-            o.UseSqlServer(configuration.GetConnectionString("WikY"));
+            o.UseNpgsql(configuration.GetConnectionString("WikY"));
         });
 
         services.AddTransient<IArticleRepository, ArticleRepository>();

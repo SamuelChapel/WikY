@@ -1,0 +1,22 @@
+name: "wiky"
+
+services:
+  wiky.webapp:
+    image: ${DOCKER_REGISTRY-}wikywebapp
+    container_name: wiky.webapp
+    build:
+      context: .
+      dockerfile: WikY.WebApp/Dockerfile
+
+  wiky.db:
+    image: postgres:latest
+    container_name: wiky.db
+    environment:
+      - POSTGRES_DB=wiky
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/wiky-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 
+

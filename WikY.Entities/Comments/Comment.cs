@@ -32,8 +32,8 @@ public sealed class Comment : Entity<CommentId>
             .RuleFor(a => a.ArticleId, articlesIds[Random.Shared.Next(articlesIds.Count)])
             .RuleFor(a => a.Content, (f, current) => f.Rant.Review(articles.Find(a => a.Id == current.ArticleId)!.Title).ClampLength(max: 100))
             .RuleFor(a => a.AuthorId, authorIds[Random.Shared.Next(authorIds.Count)])
-            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2))
-            .RuleFor(a => a.UpdatedAt, f => f.Date.Past(1))
+            .RuleFor(a => a.CreatedAt, f => f.Date.Past(2).ToUniversalTime())
+            .RuleFor(a => a.UpdatedAt, f => f.Date.Past(1).ToUniversalTime())
             .Generate());
     }
 

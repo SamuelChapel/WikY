@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using WikY.Business.Extensions;
 using WikY.Repository.Extensions;
+using WikY.Repository.Persistence.Contexts;
 using WikY.WebApp.Extensions;
 using WikY.WebApp.Middlewares;
 
@@ -15,6 +17,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<WikYDbContext>();
+        db.Database.Migrate();
+    }
+
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
     {

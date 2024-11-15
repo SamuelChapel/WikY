@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikY.Repository", "WikY.Rep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikY.Repository.Contracts", "WikY.Repository.Contracts\WikY.Repository.Contracts.csproj", "{FA3E549C-874B-4CEE-A441-A99A13C863F2}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4BF53E58-1585-47E7-AD46-70EAE44E90ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{FA3E549C-874B-4CEE-A441-A99A13C863F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA3E549C-874B-4CEE-A441-A99A13C863F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA3E549C-874B-4CEE-A441-A99A13C863F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF53E58-1585-47E7-AD46-70EAE44E90ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF53E58-1585-47E7-AD46-70EAE44E90ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF53E58-1585-47E7-AD46-70EAE44E90ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF53E58-1585-47E7-AD46-70EAE44E90ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
